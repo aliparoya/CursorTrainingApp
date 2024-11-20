@@ -23,6 +23,7 @@ import {
 import { Copy as CopyIcon, Pencil as PencilIcon, Trash as TrashIcon, ArrowUpDown, ArrowUp, ArrowDown, Eye as EyeIcon } from "lucide-react";
 import { useUser } from '@supabase/auth-helpers-react';
 import { apiKeysService } from '@/services/api-keys.service';
+import { useSupabaseClient } from '@supabase/auth-helpers-react';
 
 interface ApiKey {
   id: string;
@@ -190,6 +191,18 @@ function ViewApiKeyDialog({ apiKey, onClose }: { apiKey: ApiKey; onClose: () => 
 import { User as UserIcon } from "lucide-react";
 
 function Header() {
+  const supabase = useSupabaseClient();
+
+  const handleLogout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      window.location.href = '/auth/login';
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
+
   return (
     <header className="border-b">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
@@ -202,9 +215,16 @@ function Header() {
             <a href="/help" className="text-gray-600 hover:text-gray-900">Help</a>
           </div>
         </nav>
-        <div className="flex items-center">
+        <div className="flex items-center gap-2">
           <Button variant="ghost" size="icon">
             <UserIcon className="h-5 w-5" />
+          </Button>
+          <Button 
+            variant="ghost" 
+            onClick={handleLogout}
+            className="text-gray-600 hover:text-gray-900"
+          >
+            Log out
           </Button>
         </div>
       </div>
@@ -224,6 +244,7 @@ export default function DashboardPage() {
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [viewingKey, setViewingKey] = useState<ApiKey | undefined>();
   const [copiedKeyId, setCopiedKeyId] = useState<string | null>(null);
+  const [addedKeyId, setAddedKeyId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!user?.id) return;
@@ -247,19 +268,27 @@ export default function DashboardPage() {
     }
   };
 
-  const handleCreate = async (newKey: Omit<ApiKey, 'id' | 'created_at'>) => {
+  const handleCreate = async (newKey: ApiKey) => {
     if (!user?.id) return;
     setIsLoading(true);
     setError(null);
 
     try {
       const createdKey = await apiKeysService.createApiKey({
-        ...newKey,
+        name: newKey.name,
+        key: newKey.key,
         user_id: user.id,
         monthly_limit: newKey.monthlyLimit ?? null,
       });
-      setApiKeys([createdKey, ...apiKeys]);
+      
+      setApiKeys(prev => [...prev, createdKey]);
       setShowCreateDialog(false);
+      setAddedKeyId(createdKey.id);
+      
+      setTimeout(() => {
+        setAddedKeyId(null);
+      }, 600);
+      
       toast({
         title: 'API Key Created',
         description: `API key "${newKey.name}" has been created successfully`,
@@ -269,7 +298,7 @@ export default function DashboardPage() {
       setError(errorMessage);
       toast({
         title: 'Error',
-        description: `Failed to create API key. ${errorMessage}`,
+        description: `Failed to create API key: ${errorMessage}`,
         variant: 'destructive',
       });
     } finally {
@@ -495,10 +524,12 @@ export default function DashboardPage() {
                       <div className="flex justify-center gap-2 h-9">
                         <div className="w-[120px] flex justify-center">
                           {copiedKeyId === key.id ? (
-                            <span className={`text-sm ${
-                              copiedKeyId === key.id ? 'animate-slide-fade-in' : 'animate-slide-fade-out'
-                            }`}>
+                            <span className="text-sm animate-slide-fade-in">
                               Copied!
+                            </span>
+                          ) : addedKeyId === key.id ? (
+                            <span className="text-sm animate-slide-fade-in">
+                              Added!
                             </span>
                           ) : (
                             <>

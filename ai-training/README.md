@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎯 Cursor Training App
 
-## Getting Started
+[![Next.js](https://img.shields.io/badge/Next.js-15.0.3-black?logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
+[![Supabase](https://img.shields.io/badge/Supabase-2.46-3ECF8E?logo=supabase)](https://supabase.io/)
+[![shadcn/ui](https://img.shields.io/badge/shadcn/ui-latest-black)](https://ui.shadcn.com/)
 
-First, run the development server:
+A modern web application for managing API keys with a sleek dashboard interface, built with Next.js and Supabase.
 
-```bash
+## ✨ Features
+
+- 🔐 Secure authentication with Supabase Auth
+- 📊 Interactive dashboard for API key management
+- 🔄 Real-time updates and state management
+- 📱 Responsive design with Tailwind CSS
+- 🎨 Beautiful UI components from shadcn/ui
+- 🚀 Server-side rendering with Next.js App Router
+
+## 🚀 Getting Started
+
+1. Clone the repository:
+bash
+git clone https://github.com/yourusername/cursor-training-app.git
+cd cursor-training-app
+
+2. Install dependencies:
+bash
+npm install
+or
+yarn install
+
+3. Set up environment variables:
+Create a `.env.local` file with the following:
+env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+
+4. Run the development server:
+bash
 npm run dev
-# or
+or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🏗️ Project Structure
+src/
+├── app/ # Next.js App Router pages
+├── components/ # Reusable UI components
+├── services/ # API services and business logic
+├── lib/ # Utility functions and configurations
+└── types/ # TypeScript type definitions
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🔧 Technologies
 
-## Learn More
+- **Framework**: Next.js 15 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **UI Components**: shadcn/ui + Radix UI
+- **Database**: Supabase
+- **Authentication**: Supabase Auth
+- **State Management**: React Hooks + Context
+- **Deployment**: Vercel (recommended)
 
-To learn more about Next.js, take a look at the following resources:
+## 📦 Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The easiest way to deploy is using the [Vercel Platform](https://vercel.com):
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Push your code to a Git repository
+2. Import your project to Vercel
+3. Add your environment variables
+4. Deploy!
 
-## Deploy on Vercel
+## 🛠️ Development
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Run tests: `npm test`
+- Build for production: `npm run build`
+- Lint code: `npm run lint`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📧 Support
+
+For support, email your-email@example.com or open an issue in this repository.
